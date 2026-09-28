@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="星语塔罗馆：洗牌、抽牌、学习七十八张经典韦特塔罗牌与经典牌阵。" />
+  <title>星语塔罗馆 · 在线洗牌抽牌</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2333234e'/%3E%3Cpath d='M32 10 L37 27 L54 32 L37 37 L32 54 L27 37 L10 32 L27 27 Z' fill='%23ecd49e'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <span class="moon"></span>
+    <span class="star star-a">✦</span><span class="star star-b">✧</span><span class="star star-c">✦</span>
+    <span class="star star-d">✧</span><span class="star star-e">✦</span><span class="star star-f">✧</span>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="回到首页">
+      <span class="brand-mark">✦</span>
+      <span><strong>ARCANA</strong><small>星语塔罗馆</small></span>
+    </a>
+    <nav aria-label="页面导航">
+      <a href="#draw">抽一张牌</a>
+      <a href="#spreads">牌阵指引</a>
+      <a href="#library">牌义图鉴</a>
+      <a href="#knowledge">解牌知识</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero section-shell">
+      <p class="eyebrow">A MOMENT OF REFLECTION</p>
+      <h1>让牌面映照<br /><em>此刻的内心。</em></h1>
+      <p class="hero-copy">深呼吸，想一个想探索的问题。塔罗不是命运的判词，而是帮助你听见内在声音的一面镜子。</p>
+      <a class="button button-primary" href="#draw">开始抽牌 <span>→</span></a>
+      <div class="hero-note"><span></span> 请以开放、平静的心情阅读牌意</div>
+    </section>
+
+    <section id="draw" class="reading-section section-shell">
+      <div class="section-heading">
+        <p class="eyebrow">YOUR READING</p>
+        <h2>抽取你的塔罗讯息</h2>
+        <p>选择牌阵、写下唯一的一个问题；洗牌后，点击牌面一张一张抽牌，全部抽完再一起翻开。</p>
+      </div>
+
+      <div class="spread-picker" role="group" aria-label="选择牌阵">
+        <button class="spread-option is-active" data-spread="single">
+          <span class="option-number">01</span><strong>一张牌 · 当下指引</strong><small>适合每日提醒或一个明确问题</small>
+        </button>
+        <button class="spread-option" data-spread="three">
+          <span class="option-number">03</span><strong>三张牌 · 时间之流</strong><small>过去、现在、未来的线索</small>
+        </button>
+        <button class="spread-option" data-spread="cross">
+          <span class="option-number">05</span><strong>五芒星 · 深度探索</strong><small>看见挑战、根源与行动方向</small>
+        </button>
+        <button class="spread-option" data-spread="celtic">
+          <span class="option-number">10</span><strong>凯尔特十字 · 全局脉络</strong><small>十个角度看清一件事的全貌</small>
+        </button>
+      </div>
+
+      <div class="reading-board">
+        <div class="deck-area">
+          <div class="question-box">
+            <label for="questionInput">写下你的问题</label>
+            <textarea id="questionInput" rows="2" maxlength="60" placeholder="例如：我该如何看待眼前这个选择？"></textarea>
+            <p class="question-hint">一次只能输入一个问题 · 聚焦当下，问题越具体，解读越贴近你</p>
+          </div>
+          <div class="deck-wrap">
+            <div class="deck-stack" id="deckStack" aria-hidden="true">
+              <i></i><i></i><i></i>
+              <div class="card-back"><span>✦</span><b>ARCANA</b><span>✦</span></div>
+            </div>
+            <div class="shuffle-fan" id="shuffleFan" aria-hidden="true"></div>
+          </div>
+          <p id="drawInstruction">选择牌阵、写下问题，再开始洗牌。</p>
+          <button id="drawButton" class="button button-primary">洗牌并抽牌 <span>✦</span></button>
+          <div id="drawProgress" class="draw-progress" hidden></div>
+          <button id="resetButton" class="text-button" type="button">重新开始本次占卜</button>
+        </div>
+
+        <div class="reading-result" aria-live="polite">
+          <div id="emptyReading" class="empty-reading">
+            <span class="empty-symbol">☾</span>
+            <h3>牌面尚未揭示</h3>
+            <p>先选择一个牌阵，写下你此刻最想问的一个问题。</p>
+          </div>
+          <div id="cardsStage" class="cards-stage" hidden></div>
+          <div id="celticStage" class="celtic-stage" hidden></div>
+          <article id="interpretation" class="interpretation" hidden></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="spreads" class="spreads-section section-shell">
+      <div class="section-heading centered">
+        <p class="eyebrow">SPREAD GUIDE</p>
+        <h2>读懂牌阵的位置</h2>
+        <p>牌位定义问题的视角；同一张牌在不同位置，会有不同的提醒。</p>
+      </div>
+      <div class="spread-guide-grid">
+        <article class="spread-guide featured-guide">
+          <div class="guide-top"><span>01</span><p>DAILY COMPASS</p></div>
+          <h3>一张牌 · 当下指引</h3>
+          <p>将问题收束为「我现在最需要知道什么？」。这张牌是今日可实践的一条线索。</p>
+          <ol><li><b>当下指引</b><span>你此刻的能量、课题或值得留意之处</span></li></ol>
+        </article>
+        <article class="spread-guide">
+          <div class="guide-top"><span>03</span><p>TIME STREAM</p></div>
+          <h3>三张牌 · 时间之流</h3>
+          <p>适合梳理一件持续发展的事情，观察故事如何从背景走向下一步。</p>
+          <ol>
+            <li><b>过去</b><span>形成现况的经验、惯性或起点</span></li>
+            <li><b>现在</b><span>正发生的核心状态与可用资源</span></li>
+            <li><b>未来倾向</b><span>若沿着当前路径前行，可能显现的发展</span></li>
+          </ol>
+        </article>
+        <article class="spread-guide">
+          <div class="guide-top"><span>05</span><p>FIVE POINTS</p></div>
+          <h3>五芒星 · 深度探索</h3>
+          <p>适用于复杂抉择或内在议题，以五个角度拼出较完整的行动地图。</p>
+          <ol>
+            <li><b>核心</b><span>议题真正的重心</span></li><li><b>阻力</b><span>当前的挑战或盲点</span></li>
+            <li><b>根源</b><span>事情深层的动因</span></li><li><b>资源</b><span>能支持你的力量</span></li>
+            <li><b>行动</b><span>下一步最有益的方向</span></li>
+          </ol>
+        </article>
+        <article class="spread-guide celtic-guide">
+          <div class="guide-top"><span>10</span><p>CELTIC CROSS</p></div>
+          <h3>凯尔特十字 · 全局脉络</h3>
+          <p>经典的综合牌阵，从核心到外圈、从过去到结果，适合完整审视一件重要的事。</p>
+          <div class="celtic-diagram" aria-hidden="true">
+            <span class="cd cd-5">5</span>
+            <span class="cd cd-4">4</span>
+            <span class="cd cd-1">1</span>
+            <span class="cd cd-2">2</span>
+            <span class="cd cd-6">6</span>
+            <span class="cd cd-3">3</span>
+            <span class="cd cd-7">7</span>
+            <span class="cd cd-8">8</span>
+            <span class="cd cd-9">9</span>
+            <span class="cd cd-10">10</span>
+          </div>
+          <ol class="celtic-list">
+            <li><b>现状</b><span>1</span></li><li><b>挑战</b><span>2</span></li><li><b>根基</b><span>3</span></li>
+            <li><b>过去</b><span>4</span></li><li><b>目标</b><span>5</span></li><li><b>未来走向</b><span>6</span></li>
+            <li><b>自我</b><span>7</span></li><li><b>环境</b><span>8</span></li><li><b>希望与恐惧</b><span>9</span></li><li><b>结果</b><span>10</span></li>
+          </ol>
+        </article>
+      </div>
+    </section>
+
+    <section id="library" class="library-section section-shell">
+      <div class="section-heading library-heading">
+        <div><p class="eyebrow">CARD LIBRARY · 78 CARDS</p><h2>塔罗牌义图鉴</h2></div>
+        <p>点击任意牌面，阅读它的正位与逆位含义，以及经典韦特牌面的意象。</p>
+      </div>
+      <div class="library-toolbar" role="group" aria-label="筛选牌组">
+        <button class="filter-button is-active" data-filter="all">全部 78 张</button>
+        <button class="filter-button" data-filter="major">大阿尔克那 22 张</button>
+        <button class="filter-button" data-filter="wands">权杖</button>
+        <button class="filter-button" data-filter="cups">圣杯</button>
+        <button class="filter-button" data-filter="swords">宝剑</button>
+        <button class="filter-button" data-filter="pentacles">星币</button>
+      </div>
+      <div id="cardLibrary" class="card-library" aria-live="polite"></div>
+    </section>
+
+    <section id="knowledge" class="knowledge-section section-shell">
+      <div class="section-heading centered">
+        <p class="eyebrow">LEARN TO READ</p>
+        <h2>解牌知识 · 从入门到串联</h2>
+        <p>塔罗解读的核心不是背牌义，而是建立一套自己的阅读方法。</p>
+      </div>
+      <div class="knowledge-grid">
+        <article class="knowledge-card">
+          <h3><span>01</span>阅读三原则</h3>
+          <ul>
+            <li><b>先感受，再分析：</b>先看画面给你的第一直觉——人物、颜色、动作，再套用牌义。</li>
+            <li><b>位置决定视角：</b>同一张牌在不同牌位，就是不同的提醒。</li>
+            <li><b>回到现实：</b>牌意是一面镜子，最终以你的真实处境为准。</li>
+          </ul>
+        </article>
+        <article class="knowledge-card">
+          <h3><span>02</span>正位与逆位</h3>
+          <p>正位是牌的能量顺畅流动；逆位不是「坏」，而是能量受阻、转向内里或需要重新平衡。</p>
+          <p><b>逆位三问：</b>什么被卡住了？什么被忽视了？怎样调整能让能量重新流动？</p>
+        </article>
+        <article class="knowledge-card knowledge-journey">
+          <h3><span>03</span>愚人之旅 · 大阿卡那的成长叙事</h3>
+          <div class="journey-phase"><b>阶段一 · 觉醒（0–6）</b><p>愚者出发，学会使用工具、倾听直觉、感受丰盛、建立秩序、习得传统、做出选择。</p></div>
+          <div class="journey-phase"><b>阶段二 · 试炼（7–13）</b><p>掌控意志、驯服本能、向内寻找、接受变化、承担责任、换位放下、告别旧我。</p></div>
+          <div class="journey-phase"><b>阶段三 · 整合（14–21）</b><p>调和差异、面对阴影、破除幻象、重获希望、穿越迷雾、全然喜悦、回应召唤、抵达完整。</p></div>
+        </article>
+        <article class="knowledge-card">
+          <h3><span>04</span>四元素 · 花色语言</h3>
+          <ul class="element-list">
+            <li><b>权杖 · 火</b><span>行动、热情、创造、事业</span></li>
+            <li><b>圣杯 · 水</b><span>情感、关系、直觉、爱</span></li>
+            <li><b>宝剑 · 风</b><span>思考、语言、冲突、真相</span></li>
+            <li><b>星币 · 土</b><span>金钱、身体、工作、成果</span></li>
+          </ul>
+        </article>
+        <article class="knowledge-card">
+          <h3><span>05</span>数字的阶梯</h3>
+          <p><b>1</b>起点 · <b>2</b>平衡 · <b>3</b>合作 · <b>4</b>稳定 · <b>5</b>挑战 · <b>6</b>回馈 · <b>7</b>策略 · <b>8</b>推进 · <b>9</b>收获 · <b>10</b>完成。</p>
+          <p><b>宫廷牌：</b>侍从＝学习与消息 · 骑士＝行动与追寻 · 王后＝成熟与滋养 · 国王＝掌握与责任。</p>
+        </article>
+        <article class="knowledge-card">
+          <h3><span>06</span>把牌连起来读</h3>
+          <ul>
+            <li><b>找元素：</b>火/水/风/土哪个占主导？缺了哪个维度？</li>
+            <li><b>看数字：</b>数字递进＝故事在推进；重复的数字＝被强调。</li>
+            <li><b>意象对话：</b>牌面人物与符号之间的呼应，就是关系与冲突的线索。</li>
+            <li><b>颜色情绪：</b>红＝行动热情，蓝＝平静内省，黄＝清醒希望，金＝价值。</li>
+            <li><b>串成句子：</b>按牌位顺序，把每张牌连成一句完整的话。</li>
+          </ul>
+        </article>
+        <article class="knowledge-card">
+          <h3><span>07</span>怎样提问更有用</h3>
+          <p>「我该如何看待……」「这件事的下一步是……」「我忽略了什么」比是非题更能展开解读。</p>
+          <p>也请避免替他人提问、或追求绝对预测式的答案。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="practice-section section-shell">
+      <p class="eyebrow">A GENTLE REMINDER</p>
+      <blockquote>“牌不会替你决定；<br />它邀请你更诚实地看见自己。”</blockquote>
+      <p>若讯息让你感到不安，先回到自己的感受与现实选择。塔罗适合自我觉察，不应替代专业医疗、法律或财务建议。</p>
+    </section>
+  </main>
+
+  <footer>
+    <span>ARCANA · 星语塔罗馆</span><span>78 张牌 · 4 种牌阵 · 为自我觉察而生</span><span>© 2026 星语塔罗馆 · 未经许可不得复制或商用</span>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
